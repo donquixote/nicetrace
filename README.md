@@ -18,7 +18,7 @@ The main design goal is a backtrace array structure that looks nice in recursive
 - Filename and line number from trace item one level deeper, instead of the "called from".
 - File paths shortened, if known base paths are specified.
 - File basename and line number combined into one array key. E.g.  
-  `$backtrace[5]['file'] = '/../src/MyNamespace/MyFile.php'; $backtrace[5]['line'] = 97;` becomes
+  `$backtrace[5]['file'] = '/../src/MyNamespace/MyFile.php'; $backtrace[5]['line'] = 97;` becomes  
   `$nicetrace[' 8: foo()']['MyClass.php: 97'] = 'src/MyNamespace/MyClass.php';`
 
 ## Basic usage
