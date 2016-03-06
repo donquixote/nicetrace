@@ -6,13 +6,10 @@ use Donquixote\Nicetrace\Util\NicetraceUtil;
 
 class NicetraceTest extends \PHPUnit_Framework_TestCase {
 
-  /**
-   * @dataProvider nicetraceProvider
-   *
-   * @param array $backtrace
-   * @param array $expectedNicetrace
-   */
-  function testNicetrace(array $backtrace, array $expectedNicetrace) {
+  function testNicetrace() {
+
+    $backtrace = include dirname(__DIR__) . '/fixtures/backtrace.php';
+    $expectedNicetrace = include dirname(__DIR__) . '/fixtures/nicetrace.php';
 
     $nicetrace = NicetraceUtil::backtraceGetNicetrace($backtrace);
 
@@ -23,15 +20,4 @@ class NicetraceTest extends \PHPUnit_Framework_TestCase {
     static::assertEquals(var_export($expectedNicetrace, TRUE), var_export($nicetrace, TRUE));
   }
 
-  /**
-   * @return mixed[][]
-   */
-  function nicetraceProvider() {
-    return array(
-      array(
-        include dirname(__DIR__) . '/fixtures/backtrace.php',
-        include dirname(__DIR__) . '/fixtures/nicetrace.php',
-      ),
-    );
-  }
 }
