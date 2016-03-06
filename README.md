@@ -5,6 +5,11 @@ Inspired from [ddebug_backtrace()](http://cgit.drupalcode.org/devel/tree/devel.m
 
 The structure of the nicetrace can be seen in [nicetrace.php](tests/fixtures/nicetrace.php)
 
+## Development status
+
+This library is quite fresh, and I am still ironing out API details, that is, names of interfaces, method signatures, etc.  
+You are welcome to participate.
+
 ## Features
 
 The main design goal is a backtrace array structure that looks nice in recursive array display tools, such as [Krumo](https://github.com/mmucklo/krumo), or possibly [Ladybug](https://github.com/raulfraile/ladybug).
