@@ -7,7 +7,7 @@ The structure of the nicetrace can be seen in [nicetrace.php](tests/fixtures/nic
 
 ## Features
 
-The main design goal is a backtrace array structure that looks nice in recursive array display tools, such as [Krumo](https://github.com/mmucklo/krumo), or possibly [ladybug](https://github.com/raulfraile/Ladybug).
+The main design goal is a backtrace array structure that looks nice in recursive array display tools, such as [Krumo](https://github.com/mmucklo/krumo), or possibly [Ladybug](https://github.com/raulfraile/ladybug).
 
 - Indices of trace items enhanced with function / method names.
 - Indices for arguments enhanced with parameter names (based on reflection).
