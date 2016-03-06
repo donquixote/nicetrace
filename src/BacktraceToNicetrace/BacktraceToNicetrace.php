@@ -2,13 +2,10 @@
 
 namespace Donquixote\Nicetrace\BacktraceToNicetrace;
 
-use Donquixote\Nicetrace\CallToNicecall\CallToNicecall_Class;
 use Donquixote\Nicetrace\CallToNicecall\CallToNicecall_FileWithLine;
-use Donquixote\Nicetrace\CallToNicecall\CallToNicecall_MultipleCombined;
 use Donquixote\Nicetrace\CallToNicecall\CallToNicecall_NamedArgs;
 use Donquixote\Nicetrace\CallToNicecall\CallToNicecallInterface;
 use Donquixote\Nicetrace\CallToShortname\CallToShortname_Full;
-use Donquixote\Nicetrace\CallToShortname\CallToShortname_NoNamespace;
 use Donquixote\Nicetrace\CallToShortname\CallToShortnameInterface;
 use Donquixote\Nicetrace\PathShortener\PathShortener_BasePaths;
 use Donquixote\Nicetrace\PathShortener\PathShortener_Passthru;
@@ -32,13 +29,6 @@ class BacktraceToNicetrace implements BacktraceToNicetraceInterface {
   private $callToShortname;
 
   /**
-   * @return \Donquixote\Nicetrace\BacktraceToNicetrace\BacktraceToNicetraceInterface
-   */
-  static function createPassthru() {
-    return self::create(new PathShortener_Passthru());
-  }
-
-  /**
    * @param string[] $basePaths
    *
    * @return \Donquixote\Nicetrace\BacktraceToNicetrace\BacktraceToNicetraceInterface
@@ -47,7 +37,7 @@ class BacktraceToNicetrace implements BacktraceToNicetraceInterface {
     $pathShortener = (array() === $basePaths)
       ? new PathShortener_Passthru()
       : new PathShortener_BasePaths($basePaths);
-    return self::create($pathShortener);
+    return self::createWithPathShortener($pathShortener);
   }
 
   /**
@@ -55,41 +45,11 @@ class BacktraceToNicetrace implements BacktraceToNicetraceInterface {
    *
    * @return \Donquixote\Nicetrace\BacktraceToNicetrace\BacktraceToNicetraceInterface
    */
-  static function create(PathShortenerInterface $pathShortener) {
+  static function createWithPathShortener(PathShortenerInterface $pathShortener) {
     return new self(
       new CallToNicecall_FileWithLine($pathShortener),
       new CallToNicecall_NamedArgs(),
       new CallToShortname_Full());
-  }
-
-  /**
-   * @param \Donquixote\Nicetrace\PathShortener\PathShortenerInterface $pathShortener
-   *
-   * @return \Donquixote\Nicetrace\BacktraceToNicetrace\BacktraceToNicetraceInterface
-   */
-  static function createWithNamespacelessKey(PathShortenerInterface $pathShortener) {
-    return new self(
-      new CallToNicecall_MultipleCombined(array(
-        new CallToNicecall_FileWithLine($pathShortener),
-        new CallToNicecall_Class(),
-      )),
-      new CallToNicecall_NamedArgs(),
-      new CallToShortname_NoNamespace());
-  }
-
-  /**
-   * @param \Donquixote\Nicetrace\PathShortener\PathShortenerInterface $pathShortener
-   *
-   * @return \Donquixote\Nicetrace\BacktraceToNicetrace\BacktraceToNicetraceInterface
-   */
-  static function createWithClasslessKey(PathShortenerInterface $pathShortener) {
-    return new self(
-      new CallToNicecall_MultipleCombined(array(
-        new CallToNicecall_FileWithLine($pathShortener),
-        new CallToNicecall_Class(),
-      )),
-      new CallToNicecall_NamedArgs(),
-      new CallToShortname_NoNamespace());
   }
 
   /**
