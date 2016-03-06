@@ -2,13 +2,17 @@
 
 namespace Donquixote\Nicetrace\BacktraceToNicetrace;
 
+use Donquixote\Nicetrace\CallToNicecall\CallToNicecall_Class;
 use Donquixote\Nicetrace\CallToNicecall\CallToNicecall_FileWithLine;
+use Donquixote\Nicetrace\CallToNicecall\CallToNicecall_MultipleCombined;
 use Donquixote\Nicetrace\CallToNicecall\CallToNicecall_NamedArgs;
 use Donquixote\Nicetrace\CallToNicecall\CallToNicecallInterface;
+use Donquixote\Nicetrace\CallToShortname\CallToShortname_Full;
+use Donquixote\Nicetrace\CallToShortname\CallToShortname_NoNamespace;
+use Donquixote\Nicetrace\CallToShortname\CallToShortnameInterface;
 use Donquixote\Nicetrace\PathShortener\PathShortener_BasePaths;
 use Donquixote\Nicetrace\PathShortener\PathShortener_Passthru;
 use Donquixote\Nicetrace\PathShortener\PathShortenerInterface;
-use Donquixote\Nicetrace\Util\NicetraceUtil;
 
 class BacktraceToNicetrace implements BacktraceToNicetraceInterface {
 
@@ -21,6 +25,11 @@ class BacktraceToNicetrace implements BacktraceToNicetraceInterface {
    * @var \Donquixote\Nicetrace\CallToNicecall\CallToNicecallInterface
    */
   private $outerCallToNicecall;
+
+  /**
+   * @var \Donquixote\Nicetrace\CallToShortname\CallToShortnameInterface
+   */
+  private $callToShortname;
 
   /**
    * @return \Donquixote\Nicetrace\BacktraceToNicetrace\BacktraceToNicetraceInterface
@@ -49,16 +58,49 @@ class BacktraceToNicetrace implements BacktraceToNicetraceInterface {
   static function create(PathShortenerInterface $pathShortener) {
     return new self(
       new CallToNicecall_FileWithLine($pathShortener),
-      new CallToNicecall_NamedArgs());
+      new CallToNicecall_NamedArgs(),
+      new CallToShortname_Full());
+  }
+
+  /**
+   * @param \Donquixote\Nicetrace\PathShortener\PathShortenerInterface $pathShortener
+   *
+   * @return \Donquixote\Nicetrace\BacktraceToNicetrace\BacktraceToNicetraceInterface
+   */
+  static function createWithNamespacelessKey(PathShortenerInterface $pathShortener) {
+    return new self(
+      new CallToNicecall_MultipleCombined(array(
+        new CallToNicecall_FileWithLine($pathShortener),
+        new CallToNicecall_Class(),
+      )),
+      new CallToNicecall_NamedArgs(),
+      new CallToShortname_NoNamespace());
+  }
+
+  /**
+   * @param \Donquixote\Nicetrace\PathShortener\PathShortenerInterface $pathShortener
+   *
+   * @return \Donquixote\Nicetrace\BacktraceToNicetrace\BacktraceToNicetraceInterface
+   */
+  static function createWithClasslessKey(PathShortenerInterface $pathShortener) {
+    return new self(
+      new CallToNicecall_MultipleCombined(array(
+        new CallToNicecall_FileWithLine($pathShortener),
+        new CallToNicecall_Class(),
+      )),
+      new CallToNicecall_NamedArgs(),
+      new CallToShortname_NoNamespace());
   }
 
   /**
    * @param \Donquixote\Nicetrace\CallToNicecall\CallToNicecallInterface $innerCallToNicecall
    * @param \Donquixote\Nicetrace\CallToNicecall\CallToNicecallInterface $outerCallToNicecall
+   * @param \Donquixote\Nicetrace\CallToShortname\CallToShortnameInterface $callToShortname
    */
-  function __construct(CallToNicecallInterface $innerCallToNicecall, CallToNicecallInterface $outerCallToNicecall) {
+  function __construct(CallToNicecallInterface $innerCallToNicecall, CallToNicecallInterface $outerCallToNicecall, CallToShortnameInterface $callToShortname) {
     $this->innerCallToNicecall = $innerCallToNicecall;
     $this->outerCallToNicecall = $outerCallToNicecall;
+    $this->callToShortname = $callToShortname;
   }
 
   /**
@@ -89,13 +131,14 @@ class BacktraceToNicetrace implements BacktraceToNicetraceInterface {
 
     $nicetrace = array();
     foreach ($backtrace as $i => $call) {
-      $combinedName = NicetraceUtil::itemGetCombinedName($call);
+      $combinedName = $this->callToShortname->callGetShortname($call);
       $depth = $n - $i;
       $depthStr = ($depth <= 10 ? $nbsp : '') . $depth;
       $nicetrace[$depthStr . ': ' . $combinedName] = $nicecallsByIndex[$i];
     }
 
     $combinedName = '#';
+    /** @noinspection UnSafeIsSetOverArrayInspection */
     if (isset($backtrace[$n - 1]['file'])) {
       $combinedName = basename($backtrace[$n - 1]['file']);
     }

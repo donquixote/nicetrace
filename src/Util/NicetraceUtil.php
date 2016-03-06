@@ -18,33 +18,4 @@ final class NicetraceUtil extends UtilBase {
     return $backtraceToNicetrace->backtraceGetNicetrace($backtrace);
   }
 
-  /**
-   * @param array $backtraceItem
-   *
-   * @return string
-   */
-  static function itemGetCombinedName(array $backtraceItem) {
-    $function = $backtraceItem['function'];
-    if (NULL !== $class = ArrayUtil::arrayValueOrNull($backtraceItem, 'class')) {
-      $function = $class . $backtraceItem['type'] . $function . '()';
-    }
-    elseif ('include' === $function || 'include_once' === $function || 'require' === $function || 'require_once' === $function) {
-      $includedFile = $backtraceItem['args'][0];
-      if ('/' === $includedFile[0]) {
-        $includedFileShortname = '/[..]/' . basename($includedFile);
-      }
-      elseif (FALSE !== strpos($includedFile, '/')) {
-        $includedFileShortname = '[..]/' . basename($includedFile);
-      }
-      else {
-        $includedFileShortname = $includedFile;
-      }
-      $function .= ' ' . $includedFileShortname;
-    }
-    else {
-      $function .= '()';
-    }
-    return $function;
-  }
-
 }
