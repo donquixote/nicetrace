@@ -39,7 +39,7 @@ final class NicetraceUtil extends UtilBase {
       else {
         $includedFileShortname = $includedFile;
       }
-      $function .= ' ' . var_export($includedFileShortname, TRUE);
+      $function .= ' ' . $includedFileShortname;
     }
     else {
       $function .= '()';

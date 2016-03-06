@@ -6,7 +6,7 @@ return array (
   '14: Donquixote\\Nicetrace\\Tests\\NicetraceTest::staticGetBacktrace()' => 
   array (
   ),
-  '13: include \'/[..]/makebacktrace.php\'' => 
+  '13: include /[..]/makebacktrace.php' =>
   array (
     'args[0]' => '/home/lemonhead/projects/phplib/nicetrace/tests/src/makebacktrace.php',
     'makebacktrace.php: 5' => '/home/lemonhead/projects/phplib/nicetrace/tests/src/makebacktrace.php',
