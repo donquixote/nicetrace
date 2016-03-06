@@ -8,13 +8,13 @@ return array (
   ),
   '13: include /[..]/makebacktrace.php' => 
   array (
-    'args[0]' => '/home/lemonhead/projects/phplib/nicetrace/tests/src/makebacktrace.php',
     'makebacktrace.php: 5' => '/home/lemonhead/projects/phplib/nicetrace/tests/src/makebacktrace.php',
+    'args[0]' => '/home/lemonhead/projects/phplib/nicetrace/tests/src/makebacktrace.php',
   ),
   '12: Donquixote\\Nicetrace\\Tests\\NicetraceTest->getBacktrace()' => 
   array (
-    'args[0]' => 5,
     'NicetraceTest.php: 35' => '/home/lemonhead/projects/phplib/nicetrace/tests/src/NicetraceTest.php',
+    'args[0]' => 5,
   ),
   '11: Donquixote\\Nicetrace\\Tests\\NicetraceTest->testNicetraceExport()' => 
   array (
@@ -37,26 +37,27 @@ return array (
   ),
   ' 7: PHPUnit_Framework_TestResult->run()' => 
   array (
-    'args[0]: $test' => '{Donquixote\\Nicetrace\\Tests\\NicetraceTest}',
     'TestResult.php: 609' => '/home/lemonhead/.composer/vendor/phpunit/phpunit/src/Framework/TestResult.php',
+    'args[0]: $test' => '{Donquixote\\Nicetrace\\Tests\\NicetraceTest}',
   ),
   ' 6: PHPUnit_Framework_TestCase->run()' => 
   array (
-    'args[0]: $result' => '{PHPUnit_Framework_TestResult}',
     'TestCase.php: 693' => '/home/lemonhead/.composer/vendor/phpunit/phpunit/src/Framework/TestCase.php',
+    'args[0]: $result' => '{PHPUnit_Framework_TestResult}',
   ),
   ' 5: PHPUnit_Framework_TestSuite->run()' => 
   array (
-    'args[0]: $result' => '{PHPUnit_Framework_TestResult}',
     'TestSuite.php: 716' => '/home/lemonhead/.composer/vendor/phpunit/phpunit/src/Framework/TestSuite.php',
+    'args[0]: $result' => '{PHPUnit_Framework_TestResult}',
   ),
   ' 4: PHPUnit_Framework_TestSuite->run()' => 
   array (
-    'args[0]: $result' => '{PHPUnit_Framework_TestResult}',
     'TestSuite.php: 716' => '/home/lemonhead/.composer/vendor/phpunit/phpunit/src/Framework/TestSuite.php',
+    'args[0]: $result' => '{PHPUnit_Framework_TestResult}',
   ),
   ' 3: PHPUnit_TextUI_TestRunner->doRun()' => 
   array (
+    'TestRunner.php: 402' => '/home/lemonhead/.composer/vendor/phpunit/phpunit/src/TextUI/TestRunner.php',
     'args[0]: $suite' => '{PHPUnit_Framework_TestSuite}',
     'args[1]: $arguments' => 
     array (
@@ -70,16 +71,15 @@ return array (
       ),
       'configuration' => '/home/lemonhead/projects/phplib/nicetrace/phpunit.xml.dist',
     ),
-    'TestRunner.php: 402' => '/home/lemonhead/.composer/vendor/phpunit/phpunit/src/TextUI/TestRunner.php',
   ),
   ' 2: PHPUnit_TextUI_Command->run()' => 
   array (
+    'Command.php: 152' => '/home/lemonhead/.composer/vendor/phpunit/phpunit/src/TextUI/Command.php',
     'args[0]: $argv' => 
     array (
       0 => '/home/lemonhead/.composer/vendor/bin/phpunit',
     ),
     'args[1]: $exit' => true,
-    'Command.php: 152' => '/home/lemonhead/.composer/vendor/phpunit/phpunit/src/TextUI/Command.php',
   ),
   ' 1: PHPUnit_TextUI_Command::main()' => 
   array (

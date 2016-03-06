@@ -77,12 +77,12 @@ class BacktraceToNicetrace implements BacktraceToNicetraceInterface {
 
     $n = count($backtrace);
 
-    $nicecallsByIndex = array($n => array());
+    $nicecallsByIndex = array(0 => array());
     foreach ($backtrace as $i => $call) {
-      $nicecallsByIndex[$i] = $this->outerCallToNicecall->callGetNicecall($call);
+      $nicecallsByIndex[$i + 1] = $this->innerCallToNicecall->callGetNicecall($call);
     }
     foreach ($backtrace as $i => $call) {
-      $nicecallsByIndex[$i + 1] += $this->innerCallToNicecall->callGetNicecall($call);
+      $nicecallsByIndex[$i] += $this->outerCallToNicecall->callGetNicecall($call);
     }
 
     $nbsp = "\xC2\xA0";
