@@ -36,14 +36,7 @@ class CallToNicecall_NamedArgs implements CallToNicecallInterface {
    * @return string[]
    */
   private function callGetParamNames(array $call) {
-    $function = $call['function'];
-    if (NULL !== $class = ArrayUtil::arrayValueOrNull($call, 'class')) {
-      $reflectionFunction = new \ReflectionMethod($class, $function);
-    }
-    elseif (function_exists($function)) {
-      $reflectionFunction = new \ReflectionFunction($function);
-    }
-    else {
+    if (NULL === $reflectionFunction = $this->callGetReflectionFunction($call)) {
       return array();
     }
     $names = array();
@@ -51,5 +44,23 @@ class CallToNicecall_NamedArgs implements CallToNicecallInterface {
       $names[$i] = $param->getName();
     }
     return $names;
+  }
+
+  /**
+   * @param array $call
+   *
+   * @return \ReflectionFunctionAbstract|null
+   */
+  private function callGetReflectionFunction(array $call) {
+    $function = $call['function'];
+    if (NULL !== $class = ArrayUtil::arrayValueOrNull($call, 'class')) {
+      if (method_exists($class, $function)) {
+        return new \ReflectionMethod($class, $function);
+      }
+    }
+    elseif (function_exists($function)) {
+      return new \ReflectionFunction($function);
+    }
+    return NULL;
   }
 }
