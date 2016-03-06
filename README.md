@@ -35,6 +35,21 @@ print_r($nicetrace);
 
 ## Advanced usage
 
-The library allows to create and [compose](src/BacktraceToNicetrace/BacktraceToNicetrace.php) custom [BacktraceToNicetrace](src/BacktraceToNicetrace/BacktraceToNicetraceInterface.php) handlers.
+The library allows to create and compose custom [BacktraceToNicetrace](src/BacktraceToNicetrace/BacktraceToNicetraceInterface.php) handlers.
 
-Look at the code for an idea how this works.
+It is recommended to use the fluent interface provided by the [Builder](src/BacktraceToNicetrace/Builder/BacktraceToNicetraceBuilder.php) class.
+
+```php
+use Donquixote\Nicetrace\BacktraceToNicetrace\BacktraceToNicetraceBuilder;
+
+$backtrace = debug_backtrace();
+$backtraceToNicetrace = BacktraceToNicetraceBuilder::start()
+  ->withClasslessKey()
+  ->create();
+$nicetrace = NicetraceUtil::backtraceGetNicetrace($backtrace);
+
+// Choose your favourite recursive function/method for recursive printing.
+print_r($nicetrace);
+```
+
+The [test case](tests/src/NicetraceTest.php) gives some examples.

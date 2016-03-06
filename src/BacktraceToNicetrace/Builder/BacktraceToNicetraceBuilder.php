@@ -13,6 +13,11 @@ use Donquixote\Nicetrace\CallToShortname\CallToShortname_NoNamespace;
 use Donquixote\Nicetrace\PathShortener\PathShortener_BasePaths;
 use Donquixote\Nicetrace\PathShortener\PathShortener_Passthru;
 
+/**
+ * In this default implementation, methods return a modified clone of the
+ * builder, instead of modifying the builder itself. This means the builder,
+ * like everything in nicetrace, is immutable (=== stateless).
+ */
 class BacktraceToNicetraceBuilder implements BacktraceToNicetraceBuilderInterface {
 
   /**
