@@ -13,7 +13,7 @@ return array (
   ),
   '12: Donquixote\\Nicetrace\\Tests\\NicetraceTest->getBacktrace()' => 
   array (
-    'args[0]: $x' => 5,
+    'args[0]' => 5,
     'NicetraceTest.php: 35' => '/home/lemonhead/projects/phplib/nicetrace/tests/src/NicetraceTest.php',
   ),
   '11: Donquixote\\Nicetrace\\Tests\\NicetraceTest->testNicetraceExport()' => 
@@ -88,9 +88,5 @@ return array (
   ' 0: phpunit' => 
   array (
     'phpunit: 36' => '/home/lemonhead/.composer/vendor/phpunit/phpunit/phpunit',
-    'argv' => 
-    array (
-      0 => '/home/lemonhead/.composer/vendor/bin/phpunit',
-    ),
   ),
 );
