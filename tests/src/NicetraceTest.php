@@ -16,7 +16,11 @@ class NicetraceTest extends \PHPUnit_Framework_TestCase {
 
     $nicetrace = NicetraceUtil::backtraceGetNicetrace($backtrace);
 
+    // Compare array contents.
     static::assertEquals($expectedNicetrace, $nicetrace);
+
+    // Compare array contents and order of (nested) keys.
+    static::assertEquals(var_export($expectedNicetrace, TRUE), var_export($nicetrace, TRUE));
   }
 
   /**
